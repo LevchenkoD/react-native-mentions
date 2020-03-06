@@ -11,8 +11,9 @@ import PropTypes from 'prop-types';
 import debounce from 'lodash';
 
 export default class MentionsTextInput extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    
     this.state = {
       textInputHeight: "",
       isTrackingStarted: false,
