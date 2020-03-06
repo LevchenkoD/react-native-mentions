@@ -13,7 +13,7 @@ import debounce from 'lodash';
 export default class MentionsTextInput extends Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
       textInputHeight: "",
       isTrackingStarted: false,
@@ -87,6 +87,7 @@ export default class MentionsTextInput extends Component {
   }
 
   onChangeText(val) {
+    this.setState({value: val});
     debounce(()=>{this.props.onChangeText(val), (this.props.debounceTime || 300)}); // pass changed text back
 
     const lastChar = val.substr(val.length - 1);
