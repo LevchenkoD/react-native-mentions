@@ -81,7 +81,7 @@ export default class MentionsTextInput extends Component {
       const keywordArray = this.state.value.match(pattern);
       if (keywordArray && !!keywordArray.length) {
         const lastKeyword = keywordArray[keywordArray.length - 1];
-        debounce(()=>{this.updateSuggestions(lastKeyword)}, (this.props.debounceTime || 300));
+        this.updateSuggestions(lastKeyword);
       }
     }
   }
