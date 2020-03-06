@@ -74,11 +74,11 @@ export default class MentionsTextInput extends Component {
     this.props.triggerCallback(lastKeyword);
   }
 
-  identifyKeyword(val) {
+  identifyKeyword() {
     if (this.isTrackingStarted) {
       const boundary = this.props.triggerLocation === 'new-word-only' ? 'B' : '';
       const pattern = new RegExp(`\\${boundary}${this.props.trigger}[a-z0-9_-]+|\\${boundary}${this.props.trigger}`, `gi`);
-      const keywordArray = val.match(pattern);
+      const keywordArray = this.state.value.match(pattern);
       if (keywordArray && !!keywordArray.length) {
         const lastKeyword = keywordArray[keywordArray.length - 1];
         this.updateSuggestions(lastKeyword);
@@ -98,7 +98,7 @@ export default class MentionsTextInput extends Component {
       this.stopTracking();
     }
     this.previousChar = lastChar;
-    this.identifyKeyword(val);
+    this.identifyKeyword();
   }
 
   resetTextbox() {
