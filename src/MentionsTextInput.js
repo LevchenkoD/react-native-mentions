@@ -86,7 +86,7 @@ export default class MentionsTextInput extends Component {
   }
 
   onChangeText(val) {
-    debounce(()=>{this.props.onChangeText(val), (this.props.debounceTime || 300)}; // pass changed text back
+    debounce(()=>{this.props.onChangeText(val), (this.props.debounceTime || 300)}); // pass changed text back
 
     const lastChar = val.substr(val.length - 1);
     const wordBoundry = (this.props.triggerLocation === 'new-word-only') ? this.previousChar.trim().length === 0 : true;
