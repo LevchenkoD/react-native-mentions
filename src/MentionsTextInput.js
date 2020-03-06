@@ -8,6 +8,7 @@ import {
   ViewPropTypes
 } from 'react-native';
 import PropTypes from 'prop-types';
+import debounce from 'lodash';
 
 export default class MentionsTextInput extends Component {
   constructor() {
@@ -16,8 +17,8 @@ export default class MentionsTextInput extends Component {
       textInputHeight: "",
       isTrackingStarted: false,
       suggestionRowHeight: new Animated.Value(0),
-
-    }
+      value: this.props.value || "",
+    };
     this.isTrackingStarted = false;
     this.previousChar = " ";
   }
@@ -85,7 +86,8 @@ export default class MentionsTextInput extends Component {
   }
 
   onChangeText(val) {
-    this.props.onChangeText(val); // pass changed text back
+    debounce(()=>{this.props.onChangeText(val), (this.props.debounceTime || 300)}; // pass changed text back
+
     const lastChar = val.substr(val.length - 1);
     const wordBoundry = (this.props.triggerLocation === 'new-word-only') ? this.previousChar.trim().length === 0 : true;
     if (lastChar === this.props.trigger && wordBoundry) {
@@ -127,7 +129,7 @@ export default class MentionsTextInput extends Component {
           ref={component => this._textInput = component}
           onChangeText={this.onChangeText.bind(this)}
           multiline={true}
-          value={this.props.value}
+          value={this.state.value}
           style={[{ ...this.props.textInputStyle }, { height: Math.min(this.props.textInputMaxHeight, this.state.textInputHeight) }]}
           placeholder={this.props.placeholder ? this.props.placeholder : 'Write a comment...'}
         />
