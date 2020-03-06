@@ -81,14 +81,14 @@ export default class MentionsTextInput extends Component {
       const keywordArray = this.state.value.match(pattern);
       if (keywordArray && !!keywordArray.length) {
         const lastKeyword = keywordArray[keywordArray.length - 1];
-        this.updateSuggestions(lastKeyword);
+        debounce(()=>{this.updateSuggestions(lastKeyword)}, (this.props.debounceTime || 300));
       }
     }
   }
 
   onChangeText(val) {
     this.setState({value: val});
-    debounce(()=>{this.props.onChangeText(val), (this.props.debounceTime || 300)}); // pass changed text back
+    debounce(()=>{this.props.onChangeText(val)}, (this.props.debounceTime || 300)); // pass changed text back
 
     const lastChar = val.substr(val.length - 1);
     const wordBoundry = (this.props.triggerLocation === 'new-word-only') ? this.previousChar.trim().length === 0 : true;
